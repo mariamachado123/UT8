@@ -1,0 +1,51 @@
+ORDEN DE TIEMPO DE EJECUCIÓN DE KRUSKAL:
+
+TGrafoNoDirigido mst=new TGrafoNoDirigido(this.getVertices().values(), new LinkedList<TArista>());  ---O(1)
+        LinkedList<TArista> aristasOrdenadas=new LinkedList<>(lasAristas); ---O(A)
+        Collections.sort(aristasOrdenadas, new Comparator<TArista>() { ---O(Alog A)
+            @Override
+            public int compare(TArista a1, TArista a2) {
+                return Double.compare(a1.getCosto(), a2.getCosto()); ---O(1)
+            }
+        });
+
+        DisjointSet ds=new DisjointSet(this.getVertices().size()); ---O(N)
+        Map<Comparable, Integer> mapaIndices=new HashMap<>(); ---O(1)
+        int i = 0; ---O(1)
+        for (TVertice v:this.getVertices().values()) { ---O(N)
+            mapaIndices.put(v.getEtiqueta(), i++); ---O(1)
+        }
+        Set<String> aristasAgregadas=new HashSet<>(); ---O(1)
+
+
+        for (TArista arista:aristasOrdenadas) { ---O(A)
+            String clave1=arista.getEtiquetaOrigen() + "-" + arista.getEtiquetaDestino(); ---O(1)
+            String clave2=arista.getEtiquetaDestino() + "-" + arista.getEtiquetaOrigen(); ---O(1)
+            if (aristasAgregadas.contains(clave1)||aristasAgregadas.contains(clave2)) continue; ---O(1)
+
+            int origen=mapaIndices.get(arista.getEtiquetaOrigen()); ---O(1)
+            int destino=mapaIndices.get(arista.getEtiquetaDestino()); ---O(1)
+
+            if (ds.find(origen)!=ds.find(destino)) { ---O(α(N))
+                mst.insertarArista(arista); ---O(1)
+                ds.union(origen,destino); ---O(α(N))
+                aristasAgregadas.add(clave1); ---O(1)
+                if (mst.getLasAristas().size()==this.getVertices().size() - 1) ---O(1)
+                    break; ---O(1)
+            }
+        }
+        return mst; ---O(1)
+    }
+
+EN TOTAL ES: 0( A log A + N. α(N))
+Y el termino dominante es el ordenamiento de las aristas: O (A log A)
+
+5)¿puedes encontrar otras alternativas de implementación mejores?
+Si, en primer lugar se podría usar una cola de prioridad en vez de ordenar manualmente usando sort:
+    PriorityQueue<TArista> pq=new PriorityQueue<>(Comparator.comparingDouble(TArista::getCosto));
+    pq.addAll(lasAristas);
+Y luego hariamos pq.poll oara tener las aristas de menor costo, aunque esto no mejora complejidad.
+
+Podríamos usar también en vez de usar strings, para comparar "A-B", podríamos crear una clase  que los ordene
+y compare. Se usa menos memoria y es más rapido.
+
