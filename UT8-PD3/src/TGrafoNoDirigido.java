@@ -10,6 +10,7 @@ public class TGrafoNoDirigido extends TGrafoDirigido implements IGrafoRedElectri
      */
     public TGrafoNoDirigido(Collection<TVertice> vertices, Collection<TArista> aristas) {
         super(vertices, aristas);
+        this.lasAristas = new TAristas();
         lasAristas.insertarAmbosSentidos(aristas);
 
     }

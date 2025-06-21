@@ -12,9 +12,16 @@ import java.util.*;
  * @author ocamp
  */
 public class TGrafoRedElectrica extends TGrafoNoDirigido implements IGrafoRedElectrica {
-
+    protected Map<Comparable, TVertice> vertices = new HashMap<>();
     public TGrafoRedElectrica(Collection<TVertice> vertices, Collection<TArista> aristas) {
         super(vertices, aristas);
+    }
+    public void setVertices(Map<Comparable, TVertice> Nvertices) {
+        this.vertices.clear();
+        this.vertices.putAll(Nvertices);
+    }
+    public Map<Comparable, TVertice> getVertices() {
+        return vertices;
     }
 
     @Override
@@ -85,5 +92,9 @@ public class TGrafoRedElectrica extends TGrafoNoDirigido implements IGrafoRedEle
                 rango[rx]++;
             }
         }
+    }
+    public void reemplazarMapaVertices(Map<Comparable, TVertice> nuevosVertices) {
+        this.vertices.clear();
+        this.vertices.putAll(nuevosVertices);
     }
 }

@@ -113,5 +113,8 @@ public class TVertice<T> implements IVertice {
         }
         return null;
     }
+    public void setEtiqueta(Comparable etiqueta) {
+        this.etiqueta = etiqueta;
+    }
     
 }

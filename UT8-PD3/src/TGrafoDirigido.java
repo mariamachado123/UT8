@@ -7,7 +7,7 @@ import java.util.TreeMap;
 
 public class TGrafoDirigido implements IGrafoDirigido {
 
-    private final Map<Comparable, TVertice> vertices; //lista de vertices del grafo.-
+    protected final Map<Comparable, TVertice> vertices; //lista de vertices del grafo.-
     
 
     public TGrafoDirigido(Collection<TVertice> vertices, Collection<TArista> aristas) {

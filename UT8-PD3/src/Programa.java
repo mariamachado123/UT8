@@ -1,39 +1,33 @@
+import java.util.*;
+//NOSE PORQUE NO ANDA EL PROGRAMA
+/*public class Programa {
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.StringTokenizer;
-
-public class Programa {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-      // cargar grafo con casas y distancias
-        TGrafoRedElectrica laRed =  (TGrafoRedElectrica) UtilGrafos.cargarGrafo(
-                "UT8-PD3/barrio.txt",
-                "UT8-PD3/distancias.txt",
-                false, TGrafoRedElectrica.class);
 
-
-
-        System.out.println(new StringBuilder().append("La mejor red electrica es: ").append(laRed.mejorRedElectrica()).toString());
-        TAristas conexiones=laRed.mejorRedElectrica();
-        double costoTotal=0.0;
-        String[] lineas=new String[conexiones.size()+1];
-        int i=0;
-        for (TArista arista:conexiones) {
-            costoTotal+=arista.getCosto();
-            lineas[i]=arista.getEtiquetaOrigen().toString()+","+arista.getEtiquetaDestino().toString()+","+arista.getCosto();
-            i++;
+        TGrafoRedElectrica laRed = (TGrafoRedElectrica) UtilGrafos.cargarGrafo("UT8-PD3/barrio.txt", "UT8-PD3/distancias.txt", false, TGrafoRedElectrica.class);
+        System.out.println("Vértices cargados:");
+        for (TVertice v:laRed.getVertices().values()) {
+            System.out.println("[" + v.getEtiqueta() + "] (long: " + v.getEtiqueta().toString().length() + ")");
         }
+        // Limpiar etiquetas con BOM (\uFEFF)
+        Map<Comparable, TVertice> nuevosVertices=new HashMap<>();
+        for (TVertice vertice : laRed.getVertices().values()) {
+            String etiquetaLimpia=vertice.getEtiqueta().toString().replace("\uFEFF", "").trim();
+            vertice.setEtiqueta(etiquetaLimpia);
+            nuevosVertices.put(etiquetaLimpia, vertice);
+        }
+        laRed.reemplazarMapaVertices(nuevosVertices);
+        TAristas conexiones=laRed.mejorRedElectrica();
+        System.out.println("Cantidad de aristas en mejorRedElectrica: " + conexiones.size());
+        double costoTotal=0.0;
+        String[] lineas=new String[conexiones.size() + 1];
+        int i=0;
+        for (TArista arista : conexiones) {
+            costoTotal+=arista.getCosto();
+            lineas[i++]=arista.getEtiquetaOrigen() + "," + arista.getEtiquetaDestino() + "," + arista.getCosto();
+        }
+        lineas[i]="Costo Total: " + costoTotal;
         ManejadorArchivosGenerico.escribirArchivo("redelectrica.txt", lineas);
-
-           
-        /*calcular la mejor red electrica\
-        listar en el archivo "redelectrica.txt" el costo total del cableado
-        y las conexiones establecidas, una por linea (origen, destino, costo)
-        
-        */
+        System.out.println("Red eléctrica generada correctamente.");
     }
-}
+}*/
